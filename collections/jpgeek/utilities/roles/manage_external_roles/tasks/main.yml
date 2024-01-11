@@ -1,0 +1,11 @@
+---
+- name: Ensure the external_roles directory exists
+  file:
+    path: "{{ playbook_dir }}/external_roles"
+    state: directory
+
+- name: Process each repository
+  include_tasks: process_repo.yml
+  loop: "{{ external_roles_repos }}"
+  loop_control:
+    loop_var: repo_info

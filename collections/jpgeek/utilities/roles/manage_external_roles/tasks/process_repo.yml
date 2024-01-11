@@ -1,0 +1,29 @@
+---
+- name: Ensure the temporary directory exists
+  file:
+    path: "{{ playbook_dir }}/tmp/{{ repo_info.name }}"
+    state: directory
+
+- name: Clone/update the repository
+  git:
+    repo: "{{ repo_info.url }}"
+    dest: "{{ playbook_dir }}/tmp/{{ repo_info.name }}"
+    clone: yes
+    update: yes
+
+- name: Checkout specific version and copy each role
+  block:
+    - name: Checkout specific version for {{ role.name }}
+      command: git checkout {{ role.version }}
+      args:
+        chdir: "{{ playbook_dir }}/tmp/{{ repo_info.name }}"
+
+    - name: Copy role directory to external_roles directory
+      synchronize:
+        src: "{{ playbook_dir }}/tmp/{{ repo_info.name }}/{{ role.path }}"
+        dest: "{{ playbook_dir }}/external_roles/{{ role.name }}"
+        delete: yes
+        recursive: yes
+  loop: "{{ repo_info.roles }}"
+  loop_control:
+    loop_var: role

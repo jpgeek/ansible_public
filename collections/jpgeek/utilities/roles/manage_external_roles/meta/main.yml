@@ -1,0 +1,7 @@
+---
+galaxy_info:
+  author: S. Brown
+  description: A role for managing sudo.
+  company: GROG
+  license: MIT
+  min_ansible_version: 2.10
