@@ -1,8 +1,27 @@
 ---
-- name: Ensure the external_roles directory exists
+- name: Set fact for base directory of ansible_config_path
+  set_fact:
+    base_dir: "{{ ansible_config_file | dirname }}/external_roles"
+
+- name: Set external_roles path
+  set_fact:
+    external_roles_path: "{{ base_dir }}/roles"
+
+- name: Set repos path
+  set_fact:
+    repos_path: "{{ base_dir }}/repos"
+
+- name: Ensure the external_roles_path exists
   file:
-    path: "{{ playbook_dir }}/external_roles"
+    path: "{{ external_roles_path }}"
     state: directory
+    recurse: yes
+
+- name: Ensure the repos_pathy exists
+  file:
+    path: "{{ repos_path }}"
+    state: directory
+    recurse: yes
 
 - name: Process each repository
   include_tasks: process_repo.yml

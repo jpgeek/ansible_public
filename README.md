@@ -1,12 +1,13 @@
 # `ansible_public`
 
 Zergsoft public collections of Ansible roles.
-Ansible collections are stored under `zergsoft/<role-name>`.
+Ansible collections are stored under `jpgeek/<role-name>`.
 
 ## Build Collection Artifact
-Inside the collection directory, run:
 
-    ansible-galaxy collection build 
+Inside the collection directory, run:
+    cd collections/jpgeek/utilities
+    ansible-galaxy collection build
 
 This generates a .tar.gz file, which is the collection artifact.
 
